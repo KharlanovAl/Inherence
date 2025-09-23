@@ -48,26 +48,24 @@ public class TodosTest {
         todos.add(epic);
         todos.add(meeting);
 
-        // Поиск по "Хлеб" - должны найтись все три задачи
+        // Поиск по "Хлеб"
         Task[] result = todos.search("Хлеб");
-        assertEquals(3, result.length);
-        assertArrayEquals(new Task[]{simpleTask, epic, meeting}, result);
+        Assertions.assertArrayEquals(new Task[]{simpleTask, epic, meeting}, result);
 
         // Поиск по "Молоко" - только Epic
         result = todos.search("Молоко");
-        assertEquals(1, result.length);
-        assertArrayEquals(new Task[]{epic}, result);
+        Assertions.assertArrayEquals(new Task[]{epic}, result);
 
         // Поиск по несуществующему запросу
         result = todos.search("Сыр");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
     public void shouldSearchEmptyTodos() {
         Todos todos = new Todos();
         Task[] result = todos.search("Хлеб");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
@@ -78,10 +76,10 @@ public class TodosTest {
 
         // Поиск с учетом регистра
         Task[] result = todos.search("хлеб");
-        assertEquals(0, result.length); // Не найдено из-за разного регистра
+        Assertions.assertArrayEquals(new Task[]{}, result);
 
         result = todos.search("Хлеб");
-        assertEquals(1, result.length);
+        Assertions.assertArrayEquals(new Task[]{simpleTask}, result);
     }
 
     // Для полного покрытия
@@ -110,8 +108,7 @@ public class TodosTest {
         todos.add(task3);
         Task[] result = todos.findAll();
 
-        assertEquals(3, result.length);
-        assertArrayEquals(new Task[]{task1, task2, task3}, result);
+        Assertions.assertArrayEquals(new Task[]{task1, task2, task3}, result);
     }
 
     @Test
@@ -119,7 +116,7 @@ public class TodosTest {
         Todos todos = new Todos();
         Task[] result = todos.findAll();
 
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
@@ -129,15 +126,13 @@ public class TodosTest {
         todos.add(task);
 
         Task[] result = todos.search("milk");
-        assertEquals(1, result.length);
-        assertEquals(task, result[0]);
+        Assertions.assertArrayEquals(new Task[]{task}, result);
 
         result = todos.search("bread");
-        assertEquals(1, result.length);
-        assertEquals(task, result[0]);
+        Assertions.assertArrayEquals(new Task[]{task}, result);
 
         result = todos.search("cheese");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
@@ -148,15 +143,13 @@ public class TodosTest {
         todos.add(epic);
 
         Task[] result = todos.search("milk");
-        assertEquals(1, result.length);
-        assertEquals(epic, result[0]);
+        Assertions.assertArrayEquals(new Task[]{epic}, result);
 
         result = todos.search("bread");
-        assertEquals(1, result.length);
-        assertEquals(epic, result[0]);
+        Assertions.assertArrayEquals(new Task[]{epic}, result);
 
         result = todos.search("cheese");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
@@ -166,15 +159,13 @@ public class TodosTest {
         todos.add(meeting);
 
         Task[] result = todos.search("discussion");
-        assertEquals(1, result.length);
-        assertEquals(meeting, result[0]);
+        Assertions.assertArrayEquals(new Task[]{meeting}, result);
 
         result = todos.search("Important");
-        assertEquals(1, result.length);
-        assertEquals(meeting, result[0]);
+        Assertions.assertArrayEquals(new Task[]{meeting}, result);
 
         result = todos.search("random");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
@@ -184,7 +175,7 @@ public class TodosTest {
         todos.add(task);
 
         Task[] result = todos.search(null);
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
@@ -194,16 +185,16 @@ public class TodosTest {
         todos.add(task);
 
         Task[] result = todos.search("important");
-        assertEquals(0, result.length); // Регистрозависимый поиск
+        Assertions.assertArrayEquals(new Task[]{}, result); // Регистрозависимый поиск
 
         result = todos.search("Important");
-        assertEquals(1, result.length);
+        Assertions.assertArrayEquals(new Task[]{task}, result);
 
         result = todos.search("PROJECT");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
 
         result = todos.search("Project");
-        assertEquals(1, result.length);
+        Assertions.assertArrayEquals(new Task[]{task}, result);
     }
 
     @Test
@@ -218,10 +209,10 @@ public class TodosTest {
         todos.add(meetingWithNullFields);
 
         Task[] result = todos.search("test");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
 
         result = todos.search(null);
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 
     @Test
@@ -229,19 +220,22 @@ public class TodosTest {
         Todos todos = new Todos();
 
         // Добавляем несколько задач
+        Task[] expectedTasks = new Task[10];
         for (int i = 0; i < 10; i++) {
             SimpleTask task = new SimpleTask(i, "Task " + i);
             todos.add(task);
+            expectedTasks[i] = task;
         }
 
-        assertEquals(10, todos.findAll().length);
+        Task[] allTasks = todos.findAll();
+        Assertions.assertArrayEquals(expectedTasks, allTasks);
 
         // Поиск существующих задач
         Task[] result = todos.search("Task 5");
-        assertEquals(1, result.length);
+        Assertions.assertArrayEquals(new Task[]{expectedTasks[5]}, result);
 
         // Поиск несуществующей задачи
         result = todos.search("Non-existent");
-        assertEquals(0, result.length);
+        Assertions.assertArrayEquals(new Task[]{}, result);
     }
 }
