@@ -22,7 +22,8 @@ public class Meeting extends Task {
     public String getStart() {
         return start;
     }
-//
+
+    //
 //    @Override
 //    public boolean matches(String query) {
 //        boolean result = true;
@@ -38,15 +39,15 @@ public class Meeting extends Task {
 //        }
 //        return result;
 //    }
-@Override
-public boolean matches(String query) {
-    if (query == null) return false;
-    if (topic != null && topic.contains(query)) {
-        return true;
+    @Override
+    public boolean matches(String query) {
+        if (query == null) return false;
+        if (topic != null && topic.contains(query)) {
+            return true;
+        }
+        if (project != null && project.contains(query)) {
+            return true;
+        }
+        return false;
     }
-    if (project != null && project.contains(query)) {
-        return true;
-    }
-    return false;
-}
 }

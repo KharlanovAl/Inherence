@@ -10,7 +10,7 @@ public class SimpleTask extends Task {
         return title;
     }
 
-//    @Override
+    //    @Override
 //    public boolean matches(String query) {
 //        boolean result = false;
 //        if (title != null && query != null) {
@@ -18,11 +18,11 @@ public class SimpleTask extends Task {
 //        }
 //        return result;
 //    }
-@Override
-public boolean matches(String query) {
-    if (title == null || query == null) return false;
-    return title.contains(query);
-}
+    @Override
+    public boolean matches(String query) {
+        if (title == null || query == null) return false;
+        return title.contains(query);
+    }
 
 
 }

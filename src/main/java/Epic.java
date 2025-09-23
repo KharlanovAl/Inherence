@@ -10,7 +10,7 @@ public class Epic extends Task {
         return subtasks;
     }
 
-//    @Override
+    //    @Override
 //    public boolean matches(String query) {
 //        boolean result = false;
 //        if (subtasks != null && query != null) {
@@ -23,16 +23,16 @@ public class Epic extends Task {
 //        }
 //        return result;
 //    }
-@Override
-public boolean matches(String query) {
-    if (subtasks == null || query == null) return false;
-    for (String subtask : subtasks) {
-        if (subtask != null && subtask.contains(query)) {
-            return true;
+    @Override
+    public boolean matches(String query) {
+        if (subtasks == null || query == null) return false;
+        for (String subtask : subtasks) {
+            if (subtask != null && subtask.contains(query)) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
 
 
 }
